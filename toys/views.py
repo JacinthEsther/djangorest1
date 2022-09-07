@@ -9,7 +9,7 @@ from rest_framework.parsers import JSONParser
 from rest_framework.renderers import JSONRenderer
 
 from toys.models import Toy
-from toys.serializers import ToySerializer
+from toys.modelserializers import ToyModelSerializer
 
 
 class JSONResponse(HttpResponse):
@@ -23,12 +23,12 @@ class JSONResponse(HttpResponse):
 def toy_list(request):
     if request.method == 'GET':
         toys = Toy.objects.all()
-        toys_serializer = ToySerializer(toys, many=True)
+        toys_serializer = ToyModelSerializer(toys, many=True)
         return JSONResponse(toys_serializer.data)
 
     elif request.method == 'POST':
         toy_data = JSONParser().parse(request)
-        toy_serializer = ToySerializer(data=toy_data)
+        toy_serializer = ToyModelSerializer(data=toy_data)
         if toy_serializer.is_valid():
             toy_serializer.save()
             return JSONResponse(toy_serializer.data,
@@ -44,12 +44,12 @@ def toy_detail(request, pk):
     except Toy.DoesNotExist:
         return HttpResponse(status=status.HTTP_404_NOT_FOUND)
     if request.method == 'GET':
-        toy_serializer = ToySerializer(toy)
+        toy_serializer = ToyModelSerializer(toy)
         return JSONResponse(toy_serializer.data)
 
     elif request.method == 'PUT':
         toy_data = JSONParser().parse(request)
-        toy_serializer = ToySerializer(toy, data=toy_data)
+        toy_serializer = ToyModelSerializer(toy, data=toy_data)
         if toy_serializer.is_valid():
             toy_serializer.save()
             return JSONResponse(toy_serializer.data)
