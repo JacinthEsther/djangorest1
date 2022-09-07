@@ -41,7 +41,9 @@ toy2_rendered_into_json = json_renderer.render(serializer_for_toy2.data)
 print(toy1_rendered_into_json)
 print(toy2_rendered_into_json)
 
-json_string_for_new_toy = '{"name":"Clash Royale play set","description":"6 figures from Clash Royale", "release_date":"2017-10-09T12:10:00.776594Z","toy_category":"Playset","was_included_in_home":false}'
+json_string_for_new_toy = '{"name":"Clash Royale play set","description":"6 figures from Clash Royale", ' \
+                          '"release_date":"2017-10-09T12:10:00.776594Z","toy_category":"Playset",' \
+                          '"was_included_in_home":false} '
 json_bytes_for_new_toy = bytes(json_string_for_new_toy, encoding="UTF-8")
 stream_for_new_toy = BytesIO(json_bytes_for_new_toy)
 parser = JSONParser()
